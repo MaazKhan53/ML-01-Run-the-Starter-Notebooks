@@ -1,0 +1,44 @@
+# FlyRank AI Capstone: Predictive Content Auditing 🚀
+
+A machine learning pipeline designed to predict organic traffic decay and prioritize technical SEO interventions, built during the FlyRank ML-08 Internship.
+
+## 📖 Project Abstract
+**Question:** Can we identify high-value content pages that are at risk of traffic decline before the drop impacts top-line business metrics?
+
+**Method:** We engineered a Random Forest classifier using historical search console data (Impressions, CTR, Position) to score pages on their probability of decline, validated against a strictly isolated client holdout set.
+
+**Result:** The model delivers a directional, decision-support queue that flags at-risk pages with a precision of 0.54, outperforming the legacy static rule by 12% and enabling targeted, cost-efficient content refreshes.
+
+## 🗂 Table of Contents
+*   [Data & Scope](#data--scope)
+*   [Methodology & Reproducibility](#methodology--reproducibility)
+*   [The Action Playbook](#the-action-playbook)
+*   [Limitations & NIST AI RMF Compliance](#limitations--nist-ai-rmf-compliance)
+
+## 📊 Data & Scope
+*   **Source:** Built on the FlyRank ML Internship dataset (79M+ rows of production search data).
+*   **Pipeline:** Filtered to 16,513 active pages across 36 clients. PII, low-volume outliers (<100 impressions), and pages missing consecutive 30-day snapshot data were excluded.
+*   **Time Window:** Features generated from Mar-Apr 2026; Labels (Decline = 1/0) validated against May 2026.
+
+## 🛠 Methodology & Reproducibility
+This project adheres to the ML Reproducibility Checklist (v2.0). 
+*   **Model:** `RandomForestClassifier` (Scikit-Learn).
+*   **Validation:** `GroupKFold` split to ensure complete client isolation between training and testing.
+*   **Leakage Harness:** Verified against intentional data leakage (feeding future CTR into training), which was successfully caught and removed.
+*   **To Reproduce:** Execute the `work/notebooks/capstone.ipynb` notebook top-to-bottom. Dependencies are standard `pandas`, `numpy`, and `scikit-learn`. 
+
+## 🎯 The Action Playbook
+The model's probability scores are translated into a business-ready queue:
+1.  **Code 1 (Critical Refresh):** High Decline Prob (>70%) + High Traffic. Action: Immediate refresh.
+2.  **Code 2 (Monitor):** Med Prob (40-70%) + High Traffic. Action: Technical review.
+3.  **Code 3 (Deprioritize):** Low Traffic. Action: Do nothing.
+*See `work/outputs/w07_action_queue.csv` for the latest generated playbook.*
+
+## ⚠️ Limitations & NIST AI RMF Compliance
+Following the NIST AI Risk Management Framework, this model is **directional** and intended for **decision-support** only. It relies on **observed** historical patterns and **measured** feature inputs. 
+*   **Not Causal:** The model predicts a proxy for decline; it does not prove *why* a page declined.
+*   **Human-in-the-Loop:** High-stakes actions (unpublishing/redirecting) are strictly prohibited from automation. 
+
+---
+*Built by Maaz Khan | [LinkedIn](https://www.linkedin.com/in/maaz-khan-01290025b/) | [Portfolio](https://maazkhan--portfolio.vercel.app/)*
+*Dataset and infrastructure provided by [FlyRank AI](https://flyrank.ai).*
