@@ -1,1 +1,1 @@
-PASTE-YOUR-DEPLOYED-PAPER-URL-HERE
+https://github.com/MaazKhan53/ML-01-Run-the-Starter-Notebooks/blob/main/work/notebooks/2nd_Solved_of_capstone.ipynb
