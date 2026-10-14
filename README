@@ -1,42 +1,38 @@
-# FlyRank AI Capstone: Predictive Content Auditing 🚀
+# Predictive Content Auditing Agent 🚀
 
-A machine learning pipeline designed to predict organic traffic decay and prioritize technical SEO interventions, built during the FlyRank ML-08 Internship.
+## What it Does and For Whom
+This repository houses the Predictive Content Auditing Agent, a machine learning pipeline designed for SEO and Marketing teams. It automates the detection of organic traffic decay, shifting content auditing from a manual, reactive chore into a proactive, prioritized decision-support workflow. 
 
-## 📖 Project Abstract
-**Question:** Can we identify high-value content pages that are at risk of traffic decline before the drop impacts top-line business metrics?
-**Method:** We engineered a Random Forest classifier using historical search console data (Impressions, CTR, Position) to score pages on their probability of decline, validated against a strictly isolated client holdout set.
-**Result:** The model delivers a directional, decision-support queue that flags at-risk pages with a precision of 0.54, outperforming the legacy static rule by 12% and enabling targeted, cost-efficient content refreshes.
+## Architecture Sketch
+The agent operates on a straightforward, reproducible pipeline:
+1. **Data Ingestion:** Reads historical search console logs (Impressions, CTR, Average Position).
+2. **Preprocessing & Isolation:** Filters low-volume outliers (<100 impressions) and implements strict `GroupKFold` splits to isolate client data.
+3. **Modeling:** A Random Forest Classifier scores each URL's probability of traffic decline.
+4. **Playbook Generation:** Translates raw ML probabilities into a 3-tier action queue (Critical Refresh, Monitor, Deprioritize) based on historical traffic weight.
 
-## 🗂 Table of Contents
-*   [Data & Scope](#data--scope)
-*   [Methodology & Reproducibility](#methodology--reproducibility)
-*   [The Action Playbook](#the-action-playbook)
-*   [Limitations & NIST AI RMF Compliance](#limitations--nist-ai-rmf-compliance)
+## Setup & Reproduction
+A stranger can reproduce this environment locally with the following steps:
+1. Clone this repository to your local machine.
+2. Install the required standard dependencies: 
+   `pip install pandas numpy scikit-learn matplotlib`
+3. Navigate to the working directory: `cd work/notebooks/`
+4. Execute the pipeline: Run the `capstone.ipynb` notebook top-to-bottom. The script will automatically generate the models and export the visual artifacts to the `work/figures/` directory.
 
-## 📊 Data & Scope
-*   **Source:** Built on the FlyRank ML Internship dataset (79M+ rows of production search data).
-*   **Pipeline:** Filtered to 16,513 active pages across 36 clients. PII, low-volume outliers (<100 impressions), and pages missing consecutive 30-day snapshot data were excluded.
-*   **Time Window:** Features generated from Mar-Apr 2026; Labels (Decline = 1/0) validated against May 2026.
+## Usage Example
+Upon execution, the agent outputs a ranked action playbook in CSV format to `work/outputs/w07_action_queue.csv`. Reviewers simply open this file to see prioritized tasks.
+*   **Example Output:** `URL_ID: 85 | Prob: 0.88 | Impressions: 23,347 | Action: Code 1: Critical Refresh`
 
-## 🛠 Methodology & Reproducibility
-This project adheres to the ML Reproducibility Checklist (v2.0). 
-*   **Model:** `RandomForestClassifier` (Scikit-Learn).
-*   **Validation:** `GroupKFold` split to ensure complete client isolation between training and testing.
-*   **Leakage Harness:** Verified against intentional data leakage (feeding future CTR into training), which was successfully caught and removed.
-*   **To Reproduce:** Execute the `work/notebooks/capstone.ipynb` notebook top-to-bottom. Dependencies are standard `pandas`, `numpy`, and `scikit-learn`. 
+## v2 Evaluation Results
+The model was evaluated against a legacy heuristic baseline using the same strict holdout groups.
+*   **Base Rate (Random Guessing):** 0.416
+*   **Baseline (Legacy Rule):** 0.496
+*   **Agent Performance (Random Forest):** 0.540
+*   *Result:* The agent delivers a measured, directional 12% precision uplift over the baseline rule.
 
-## 🎯 The Action Playbook
-The model's probability scores are translated into a business-ready queue:
-1.  **Code 1 (Critical Refresh):** High Decline Prob (>70%) + High Traffic. Action: Immediate refresh.
-2.  **Code 2 (Monitor):** Med Prob (40-70%) + High Traffic. Action: Technical review.
-3.  **Code 3 (Deprioritize):** Low Traffic. Action: Do nothing.
-*See `work/outputs/w07_action_queue.csv` for the latest generated playbook.*
+## Limitations & Guardrails
+*   **Correlation vs. Causation:** The agent flags mathematical proxies for decline based on observed historical data; it does not prove the causal reason *why* a page is decaying.
+*   **Human-in-the-Loop Required:** The agent is strictly a decision-support tool. It includes a programmatic "No-Go" list that prevents the automated unpublishing or redirection of core business URLs.
+*   **Data Drift:** Predictions are bounded by the training horizon. Shifts in search engine algorithms will trigger a 15% data drift threshold, requiring manual retraining.
 
-## ⚠️ Limitations & NIST AI RMF Compliance
-Following the NIST AI Risk Management Framework, this model is **directional** and intended for **decision-support** only. It relies on **observed** historical patterns and **measured** feature inputs. 
-*   **Not Causal:** The model predicts a proxy for decline; it does not prove *why* a page declined.
-*   **Human-in-the-Loop:** High-stakes actions (unpublishing/redirecting) are strictly prohibited from automation. 
-
----
-*Built by Maaz Khan | [LinkedIn](https://www.linkedin.com/in/maaz-khan-01290025b/) | [Portfolio](https://maazkhan--portfolio.vercel.app/)*
-*Dataset and infrastructure provided by [FlyRank AI](https://flyrank.ai).*
+## AI Transparency
+In the development of this agent, I utilized Gemini and Claude as collaborative coding partners. The AI performed the heavy lifting on generating Python boilerplate, writing HTML/Tailwind styling for the deployment, and resolving complex notebook dependency errors. I personally designed the architecture, manually audited all mathematical outputs (ensuring `GroupKFold` isolation), engineered the Leakage Harness to prevent data contamination, and wrote the final business-logic translations.
