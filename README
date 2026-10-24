@@ -1,41 +1,38 @@
-# Predictive Content Auditing Agent (Prototype) 🚀
+# Predictive Content Auditing & Triage Agent 🚀
 
-## What it Does and For Whom
-This repository houses a prototype of the Predictive Content Auditing Agent, a machine learning pipeline designed for SEO and Marketing teams. It automates the detection of organic traffic decay, shifting content auditing from a manual, reactive chore into a proactive, prioritized decision-support workflow. 
+**Live Deployed Research Paper:** [https://maazkhan53.github.io/ML-01-Run-the-Starter-Notebooks/](https://maazkhan53.github.io/ML-01-Run-the-Starter-Notebooks/)  
+**Author Portfolio:** [https://maazkhan--portfolio.vercel.app/](https://maazkhan--portfolio.vercel.app/)
 
-## Data Provenance & Public Safety
-**Data Provenance Note:** The structural schema of this project is based on the FlyRank ML Internship dataset (79M+ rows of production search data). However, to ensure 100% public safety, prevent proprietary data leakage, and allow seamless local reproducibility, **all data points, rows, and evaluation metrics computed in this public repository are synthetic and illustrative**, generated via `numpy.random`. 
+## What It Does and For Whom
+This repository houses the **Predictive Content Auditing Agent**, a machine learning prioritization pipeline built for editorial and technical SEO teams. Managing 30,000+ URLs under finite human bandwidth makes manual portfolio audits impossible. Our framework scores organic decay risk and combines it with 90-day search visibility to route pages into a four-archetype operational Action Playbook.
 
-## Architecture Sketch
-The agent operates on a straightforward, reproducible pipeline:
-1. **Data Ingestion:** Reads simulated historical search console logs (Impressions, CTR, Average Position).
-2. **Preprocessing & Isolation:** Filters low-volume outliers (<100 impressions) and implements strict `GroupKFold` splits to isolate client data.
-3. **Modeling:** A Random Forest Classifier scores each URL's probability of traffic decline.
-4. **Playbook Generation:** Translates raw ML probabilities into a 3-tier action queue (Critical Refresh, Monitor, Deprioritize) based on historical traffic weight.
+## Data Provenance & Leakage Prevention
+* **Data Provenance:** All results in this repository are **measured and computed directly** on the official FlyRank ML Internship anonymized production dataset (`data/raw/content_refresh_anonymized.csv`), comprising **30,000 production URLs across 32 enterprise client domains** sampled from FlyRank's 79M-row search warehouse.
+* **Deliberate Exclusions (13 Columns Purged):** We programmatically exclude direct label derivatives (`trend_direction`, `trend_pct`, `trend_outcome`), entity/pipeline identifiers (`client_id`, `content_id`, `provider_used`, `model_used`), and short-window differential fields (`impressions_last_30d`, `impressions_prev_30d`, `clicks_last_30d`, `clicks_prev_30d`, `sessions_last_30d`, `sessions_prev_30d`) that mechanically leak the target formula.
+* **Public-Safety Guarantee:** All entity identifiers are cryptographically hashed; zero client names, domains, or raw URLs exist in the codebase or outputs.
+
+## Validation Architecture & Measured Results (7 Unseen Clients)
+We enforce a strict client-grouped holdout split via `GroupShuffleSplit` (`test_size=0.20, random_state=42` on `client_id`): **23,837 training pages across 25 clients** and **6,163 held-out test pages across 7 unseen clients** (0 client overlap).
+
+| Metric / Cutoff | Calibrated Logistic Regression | Week-4 Heuristic Baseline | Held-Out Base Rate | Lift Over Baseline |
+| :--- | :---: | :---: | :---: | :---: |
+| **Precision@10** | **70.0%** (7/10) | 20.0% (2/10) | 51.1% | **+50.0% (3.5×)** |
+| **Precision@20** | **60.0%** (12/20) | 40.0% (8/20) | 51.1% | **+20.0% (1.5×)** |
+| **Precision@50** | **70.0%** (35/50) | 40.0% (20/50) | 51.1% | **+30.0% (1.75×)** |
+| **Held-Out PR-AUC** | **0.5758** | — | 0.5110 | — |
+| **Held-Out ROC-AUC** | **0.5821** | — | 0.5000 | — |
+
+* **The Validation Generalization Gap:** Comparing a naive random row split (`0.7197` AP) against our honest client-grouped split (`0.5758` AP) proves that random splitting inflates performance by **+14.4 percentage points** due to cross-row domain memorization.
+* **Actionable Triage Queue:** Across all 30,000 pages, **10,670 URLs (35.6%)** are routed into four operational archetypes (*Decaying High-Demand Core*, *Striking-Distance Opportunity*, *High-Visibility CTR Deficit*, and *Thin/Zombie Content*) governed by automated human-review safety guardrails.
 
 ## Setup & Reproduction
-A stranger can reproduce this simulated environment locally with the following steps:
-1. Clone this repository to your local machine.
-2. Install the required standard dependencies: 
-   `pip install pandas numpy scikit-learn matplotlib`
-3. Navigate to the working directory: `cd work/notebooks/`
-4. Execute the pipeline: Run the `capstone.ipynb` notebook top-to-bottom. The script will automatically generate the models and export the visual artifacts to the `work/figures/` directory.
+1. Clone this repository:
+   `git clone https://github.com/MaazKhan53/ML-01-Run-the-Starter-Notebooks.git`
+2. Install standard dependencies:
+   `pip install pandas numpy scikit-learn matplotlib duckdb huggingface_hub`
+3. Run `work/notebooks/Solved_capstone.ipynb` (or `work/notebooks/capstone.ipynb`) top-to-bottom (`RANDOM_SEED = 42`).
 
-## Usage Example
-Upon execution, the agent outputs a ranked action playbook in CSV format to `work/outputs/w07_action_queue.csv`. Reviewers simply open this file to see prioritized tasks.
-*   **Example Output:** `URL_ID: 85 | Prob: 0.88 | Impressions: 23,347 | Action: Code 1: Critical Refresh`
-
-## Simulated Evaluation Results
-Because the underlying data is synthetic, these results are illustrative of the pipeline's computational capability, not measured historical business facts.
-*   **Simulated Base Rate (Random Guessing):** 0.416
-*   **Simulated Baseline (Legacy Rule):** 0.496
-*   **Simulated Agent Performance (Random Forest):** 0.540
-*   *Result:* The agent prototype successfully calculates and demonstrates a simulated, directional 12% precision uplift over the baseline rule.
-
-## Limitations & Guardrails
-*   **Correlation vs. Causation:** The agent flags mathematical proxies for decline based on observed historical data; it does not prove the causal reason *why* a page is decaying.
-*   **Human-in-the-Loop Required:** The agent is strictly a decision-support tool. It includes a programmatic "No-Go" list that prevents the automated unpublishing or redirection of core business URLs.
-*   **Data Drift:** Predictions are bounded by the training horizon. Shifts in search engine algorithms will trigger a 15% data drift threshold, requiring manual retraining.
-
-## AI Transparency
-In the development of this agent, I utilized Gemini and Claude as collaborative coding partners. The AI performed the heavy lifting on generating Python boilerplate, writing HTML/Tailwind styling for the deployment, and resolving complex notebook dependency errors. I personally designed the architecture, manually audited all mathematical outputs (ensuring `GroupKFold` isolation), engineered the Leakage Harness to prevent data contamination, and wrote the final business-logic translations.
+## Limitations & AI Transparency
+* **Observational & Decision-Support Framing:** Predictions capture historical observational associations, not causal refresh proof or search algorithm reverse-engineering.
+* **AI Transparency:** Built in collaboration with Gemini and Claude for pipeline scaffolding, type-sanitization debugging, and HTML/SVG presentation, with all validation boundaries (`GroupShuffleSplit` / `GroupKFold`), leakage harness assertions, and metric verifications audited manually.
+* **Data Credit:** Built on the FlyRank ML Internship dataset ([https://flyrank.ai](https://flyrank.ai)).
