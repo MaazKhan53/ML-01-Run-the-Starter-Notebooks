@@ -1,17 +1,20 @@
-# Predictive Content Auditing Agent 🚀
+# Predictive Content Auditing Agent (Prototype) 🚀
 
 ## What it Does and For Whom
-This repository houses the Predictive Content Auditing Agent, a machine learning pipeline designed for SEO and Marketing teams. It automates the detection of organic traffic decay, shifting content auditing from a manual, reactive chore into a proactive, prioritized decision-support workflow. 
+This repository houses a prototype of the Predictive Content Auditing Agent, a machine learning pipeline designed for SEO and Marketing teams. It automates the detection of organic traffic decay, shifting content auditing from a manual, reactive chore into a proactive, prioritized decision-support workflow. 
+
+## Data Provenance & Public Safety
+**Data Provenance Note:** The structural schema of this project is based on the FlyRank ML Internship dataset (79M+ rows of production search data). However, to ensure 100% public safety, prevent proprietary data leakage, and allow seamless local reproducibility, **all data points, rows, and evaluation metrics computed in this public repository are synthetic and illustrative**, generated via `numpy.random`. 
 
 ## Architecture Sketch
 The agent operates on a straightforward, reproducible pipeline:
-1. **Data Ingestion:** Reads historical search console logs (Impressions, CTR, Average Position).
+1. **Data Ingestion:** Reads simulated historical search console logs (Impressions, CTR, Average Position).
 2. **Preprocessing & Isolation:** Filters low-volume outliers (<100 impressions) and implements strict `GroupKFold` splits to isolate client data.
 3. **Modeling:** A Random Forest Classifier scores each URL's probability of traffic decline.
 4. **Playbook Generation:** Translates raw ML probabilities into a 3-tier action queue (Critical Refresh, Monitor, Deprioritize) based on historical traffic weight.
 
 ## Setup & Reproduction
-A stranger can reproduce this environment locally with the following steps:
+A stranger can reproduce this simulated environment locally with the following steps:
 1. Clone this repository to your local machine.
 2. Install the required standard dependencies: 
    `pip install pandas numpy scikit-learn matplotlib`
@@ -22,12 +25,12 @@ A stranger can reproduce this environment locally with the following steps:
 Upon execution, the agent outputs a ranked action playbook in CSV format to `work/outputs/w07_action_queue.csv`. Reviewers simply open this file to see prioritized tasks.
 *   **Example Output:** `URL_ID: 85 | Prob: 0.88 | Impressions: 23,347 | Action: Code 1: Critical Refresh`
 
-## v2 Evaluation Results
-The model was evaluated against a legacy heuristic baseline using the same strict holdout groups.
-*   **Base Rate (Random Guessing):** 0.416
-*   **Baseline (Legacy Rule):** 0.496
-*   **Agent Performance (Random Forest):** 0.540
-*   *Result:* The agent delivers a measured, directional 12% precision uplift over the baseline rule.
+## Simulated Evaluation Results
+Because the underlying data is synthetic, these results are illustrative of the pipeline's computational capability, not measured historical business facts.
+*   **Simulated Base Rate (Random Guessing):** 0.416
+*   **Simulated Baseline (Legacy Rule):** 0.496
+*   **Simulated Agent Performance (Random Forest):** 0.540
+*   *Result:* The agent prototype successfully calculates and demonstrates a simulated, directional 12% precision uplift over the baseline rule.
 
 ## Limitations & Guardrails
 *   **Correlation vs. Causation:** The agent flags mathematical proxies for decline based on observed historical data; it does not prove the causal reason *why* a page is decaying.
