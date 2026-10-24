@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Predictive Content Triage & Decay Scoring at Scale | Maaz Khan</title>
+  <meta name="description" content="Evaluating regularized machine learning classification and leakage harnesses against heuristic striking-distance baselines on 30,000 production URLs across 32 enterprise domains." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    code, pre, .mono { font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-blue-600 selection:text-white">
+
+  <!-- Top Banner -->
+  <header class="bg-slate-900 text-white border-b border-slate-800">
+    <div class="max-w-5xl mx-auto px-6 py-12 md:py-16">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-400/30 text-blue-300 text-xs font-semibold uppercase tracking-wider mb-6">
+        FlyRank ML Capstone Research Paper · Lane 2: Refresh & Opportunity Scoring
+      </div>
+      <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight text-white mb-4">
+        Predictive Content Triage &amp; Decay Scoring Under Bandwidth Constraints
+      </h1>
+      <p class="text-lg md:text-xl text-slate-300 max-w-3xl leading-relaxed mb-8">
+        Evaluating calibrated classification, non-linear tree ensembles, and mechanical leakage harnesses against heuristic striking-distance baselines on 30,000 production URLs across 32 enterprise domains.
+      </p>
+
+      <!-- Metadata Bar -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-6 border-t border-slate-800 text-sm">
+        <div>
+          <span class="text-slate-400 block text-xs uppercase tracking-wider">Author</span>
+          <a href="https://maazkhan--portfolio.vercel.app/" target="_blank" class="font-semibold text-white hover:text-blue-400 transition">Maaz Khan (@MaazKhan53)</a>
+        </div>
+        <div>
+          <span class="text-slate-400 block text-xs uppercase tracking-wider">Track &amp; Lane</span>
+          <span class="font-semibold text-slate-200">Lane 2: Content Refresh Scoring</span>
+        </div>
+        <div>
+          <span class="text-slate-400 block text-xs uppercase tracking-wider">Data Provenance</span>
+          <span class="font-semibold text-slate-200">FlyRank 30k Sample (79M Warehouse)</span>
+        </div>
+        <div>
+          <span class="text-slate-400 block text-xs uppercase tracking-wider">Code &amp; Notebooks</span>
+          <a href="https://github.com/MaazKhan53/ML-01-Run-the-Starter-Notebooks" target="_blank" class="font-semibold text-blue-400 hover:underline">GitHub Repository &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 py-12 space-y-16">
+
+    <!-- Abstract & KPI Scorecards -->
+    <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
+      <h2 class="text-xs font-bold uppercase tracking-widest text-blue-600 mb-3">Abstract (5-Sentence Summary)</h2>
+      <p class="text-slate-700 leading-relaxed text-base md:text-lg mb-8">
+        Editorial and SEO teams managing tens of thousands of URLs face severe bandwidth constraints when identifying which decaying pages warrant immediate manual intervention. Using the official anonymized production sample from the FlyRank search intelligence warehouse comprising <strong>30,000 content items across 32 enterprise clients</strong>, we examined 90-day search visibility metrics, on-page structure, and keyword intent while enforcing a programmatic leakage harness to purge 13 label-derived and 30-day formula-leaking columns. We formulated content refresh prioritization as a decision-support triage task, evaluating an L2-regularized Logistic Regression scorer and a depth-constrained Random Forest benchmark under a strict client-grouped holdout split (<strong>25 training clients, 7 unseen test clients with zero domain overlap</strong>). Evaluated under a locked comparison contract on the 6,163 held-out test pages, our primary model achieved a <strong>Precision@10 of 70.0%</strong> and <strong>Precision@50 of 70.0%</strong>—outperforming the Week-4 heuristic striking-distance baseline by <strong>+50.0 and +30.0 percentage points</strong> respectively (a 3.5&times; lift at K=10 against a 51.1% test base rate). Finally, we weight calibrated decay probabilities by 90-day impression demand to route <strong>10,670 actionable URLs</strong> into a four-archetype Action Playbook governed by automated human-in-the-loop safety guardrails.
+      </p>
+
+      <!-- KPI Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-slate-50 rounded-xl p-5 border border-slate-200">
+          <div class="text-3xl font-extrabold text-blue-600">70.0%</div>
+          <div class="text-sm font-semibold text-slate-900 mt-1">Precision@10 &amp; @50 (Model)</div>
+          <div class="text-xs text-emerald-700 font-medium mt-1">+50.0% lift at K=10 vs. Baseline (20.0%)</div>
+        </div>
+        <div class="bg-slate-50 rounded-xl p-5 border border-slate-200">
+          <div class="text-3xl font-extrabold text-teal-600">6,163</div>
+          <div class="text-sm font-semibold text-slate-900 mt-1">Held-Out Test Pages</div>
+          <div class="text-xs text-slate-500 mt-1">7 unseen client domains (0 overlap)</div>
+        </div>
+        <div class="bg-slate-50 rounded-xl p-5 border border-slate-200">
+          <div class="text-3xl font-extrabold text-purple-600">+14.4%</div>
+          <div class="text-sm font-semibold text-slate-900 mt-1">Generalization Gap Exposed</div>
+          <div class="text-xs text-slate-500 mt-1">Random split (0.7197) vs Grouped (0.5758)</div>
+        </div>
+        <div class="bg-slate-50 rounded-xl p-5 border border-slate-200">
+          <div class="text-3xl font-extrabold text-amber-600">10,670</div>
+          <div class="text-sm font-semibold text-slate-900 mt-1">Actionable Triage Queue</div>
+          <div class="text-xs text-slate-500 mt-1">35.6% of inventory across 4 archetypes</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Table of Contents -->
+    <nav class="bg-slate-900 text-slate-200 rounded-xl p-6 text-sm">
+      <div class="font-bold text-white uppercase tracking-wider text-xs mb-3">Paper Navigation</div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+        <a href="#sec-1" class="hover:text-blue-400 transition">01. Introduction &amp; Problem Statement</a>
+        <a href="#sec-2" class="hover:text-blue-400 transition">02. Data Provenance &amp; Leakage Audit</a>
+        <a href="#sec-3" class="hover:text-blue-400 transition">03. Methodology &amp; Leakage Harness</a>
+        <a href="#sec-4" class="hover:text-blue-400 transition">04. Empirical Results vs. Baseline</a>
+        <a href="#sec-5" class="hover:text-blue-400 transition">05. Limitations &amp; Generalization Gap</a>
+        <a href="#sec-6" class="hover:text-blue-400 transition">06. Ranked Action Playbook</a>
+        <a href="#sec-7" class="hover:text-blue-400 transition">07. Reproducibility &amp; Notebooks</a>
+        <a href="#sec-8" class="hover:text-blue-400 transition">08. Acknowledgments &amp; Data Credit</a>
+      </div>
+    </nav>
+
+    <!-- Section 1 -->
+    <section id="sec-1" class="space-y-4">
+      <div class="text-xs font-bold uppercase tracking-widest text-blue-600">Section 01</div>
+      <h2 class="text-2xl font-bold text-slate-900">Introduction &amp; Operational Problem Statement</h2>
+      <p class="text-slate-700 leading-relaxed">
+        Enterprise organic search portfolios routinely span 10,000 to 100,000+ published URLs, yet editorial and SEO teams typically have the human bandwidth to audit and rewrite only <strong>10 to 50 pages per sprint</strong>. Across our 30,000-page production sample, <strong>16,262 pages (54.21%)</strong> are in active decline, including <strong>3,363 high-demand pages</strong> (&ge;5,000 impressions).
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+        <div class="bg-white p-6 rounded-xl border border-slate-200">
+          <h3 class="font-bold text-slate-900 mb-2">The Decision Supported</h3>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            Rather than relying on crude static rules (such as flagging every page with CTR &le; 0.5% in positions 4–20, which produces an <strong>80% false-alarm rate</strong> in the top 10), our framework scores each URL's decay probability, weights it by 90-day impression volume, and assigns a concrete operational archetype and reason code.
+          </p>
+        </div>
+        <div class="bg-white p-6 rounded-xl border border-slate-200">
+          <h3 class="font-bold text-slate-900 mb-2">Asymmetric Cost of a Wrong Call</h3>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            <strong>False Positive (False Alarm):</strong> Wastes 4–8 hours of editorial rewriting on a stable URL experiencing normal seasonal noise (mitigated via a 5-minute human SERP check).<br/>
+            <strong>False Negative (Missed Decay):</strong> Permits a core revenue-driving pillar page to bleed rankings and organic demand unnoticed until recovery requires months of link and content remediation.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2 -->
+    <section id="sec-2" class="space-y-6">
+      <div class="text-xs font-bold uppercase tracking-widest text-blue-600">Section 02</div>
+      <h2 class="text-2xl font-bold text-slate-900">Data Provenance, Grain &amp; Public-Safe Leakage Contract</h2>
+      <p class="text-slate-700 leading-relaxed">
+        <strong>Data Provenance Note:</strong> All metrics, tables, and charts in this paper are <strong>measured and computed directly</strong> from the official anonymized FlyRank production release (<code>data/raw/content_refresh_anonymized.csv</code>, 30,000 rows &times; 45 columns across 32 enterprise clients, sampled from the 79M-row warehouse). Each row represents one unique content entity (<code>content_id</code>) aggregated over a 90-day window.
+      </p>
+
+      <div class="overflow-x-auto bg-white rounded-xl border border-slate-200 shadow-sm">
+        <table class="w-full text-left border-collapse text-sm">
+          <thead>
+            <tr class="bg-slate-100 text-slate-700 border-b border-slate-200">
+              <th class="py-3 px-4 font-semibold">Excluded Column Group (13 Total)</th>
+              <th class="py-3 px-4 font-semibold">Exclusion Rationale</th>
+              <th class="py-3 px-4 font-semibold">Risk if Included in Feature Matrix</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200 text-slate-600">
+            <tr>
+              <td class="py-3 px-4 mono text-xs text-rose-700 font-medium">trend_direction, trend_pct, trend_outcome</td>
+              <td class="py-3 px-4">Target label and direct trajectory derivatives</td>
+              <td class="py-3 px-4">Direct target leakage (trivial 100% label memorization)</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 mono text-xs text-rose-700 font-medium">impressions_last_30d, impressions_prev_30d, clicks_last_30d, clicks_prev_30d, sessions_last_30d, sessions_prev_30d</td>
+              <td class="py-3 px-4">Short-window differential components used to compute the target label</td>
+              <td class="py-3 px-4">Mechanical formula leakage; model reconstructs the 30d subtraction rule (AP spikes to &gt;0.99)</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 mono text-xs text-slate-800">client_id, content_id</td>
+              <td class="py-3 px-4">Hashed account and URL identifiers</td>
+              <td class="py-3 px-4">Domain authority memorization; <code>client_id</code> restricted strictly to grouped splitting</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 mono text-xs text-slate-800">provider_used, model_used</td>
+              <td class="py-3 px-4">Internal pipeline metadata</td>
+              <td class="py-3 px-4">Pipeline artifact noise unrelated to search visibility</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-xs text-slate-500">
+        <strong>Public-Safety Verification:</strong> Programmatic assertions confirm that all 32 permitted modeling features contain zero raw URLs (<code>http://</code> or <code>https://</code>), zero client domain names, and zero private search queries.
+      </p>
+    </section>
+
+    <!-- Section 3 -->
+    <section id="sec-3" class="space-y-6">
+      <div class="text-xs font-bold uppercase tracking-widest text-blue-600">Section 03</div>
+      <h2 class="text-2xl font-bold text-slate-900">Methodology, Leakage Harness &amp; Locked Comparison Contract</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white p-6 rounded-xl border border-slate-200">
+          <h3 class="font-bold text-slate-900 mb-2">1. Client-Grouped Split</h3>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            Enforced via <code>GroupShuffleSplit</code> (80/20, seed 42) on <code>client_id</code>: <strong>23,837 training rows across 25 clients</strong> and <strong>6,163 held-out test rows across 7 unseen clients</strong>. We also run 5-fold <code>GroupKFold</code> cross-validation on the training partition.
+          </p>
+        </div>
+        <div class="bg-white p-6 rounded-xl border border-slate-200">
+          <h3 class="font-bold text-slate-900 mb-2">2. Deliberate Leakage Harness</h3>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            To prove our audit catches circular features, we ran a quarantined test injecting <code>impressions_last_30d</code>, <code>impressions_prev_30d</code>, and <code>trend_pct</code>. Average Precision spiked to <strong>1.0000</strong>, verifying the harness detects formula leaks before locking the clean 32-feature run.
+          </p>
+        </div>
+        <div class="bg-white p-6 rounded-xl border border-slate-200">
+          <h3 class="font-bold text-slate-900 mb-2">3. Fair Comparison Contract</h3>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            All models and the Week-4 striking-distance heuristic (<code>impressions_90d &times; (21 - avg_position)</code>) are evaluated on the exact same 6,163 unseen client rows with deterministic tie-breaking (<code>score DESC, impressions_90d DESC, content_id ASC</code>).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4 -->
+    <section id="sec-4" class="space-y-6">
+      <div class="text-xs font-bold uppercase tracking-widest text-blue-600">Section 04</div>
+      <h2 class="text-2xl font-bold text-slate-900">Empirical Results vs. Baseline on Held-Out Clients</h2>
+      <p class="text-slate-700 leading-relaxed">
+        On the 6,163 held-out pages across 7 unseen clients (decline base rate = <strong>51.10%</strong>), our calibrated L2 Logistic Regression model achieved a held-out <strong>ROC-AUC of 0.5821</strong> and <strong>Average Precision (PR-AUC) of 0.5758</strong>. At operational top-K triage cutoffs, machine learning concentrates genuinely decaying pages at the very front of the editorial review queue:
+      </p>
+
+      <div class="overflow-x-auto bg-white rounded-xl border border-slate-200 shadow-sm">
+        <table class="w-full text-left border-collapse text-sm">
+          <thead>
+            <tr class="bg-slate-100 text-slate-700 border-b border-slate-200">
+              <th class="py-3 px-4 font-semibold">Review Cutoff (K)</th>
+              <th class="py-3 px-4 font-semibold">Logistic Regression (Primary)</th>
+              <th class="py-3 px-4 font-semibold">Week-4 Heuristic Baseline</th>
+              <th class="py-3 px-4 font-semibold">Held-Out Base Rate</th>
+              <th class="py-3 px-4 font-semibold">Absolute Lift</th>
+              <th class="py-3 px-4 font-semibold">Relative Multiplier</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200 text-slate-700">
+            <tr>
+              <td class="py-3 px-4 font-semibold">Precision@10</td>
+              <td class="py-3 px-4 font-bold text-blue-600">70.0% (7/10)</td>
+              <td class="py-3 px-4">20.0% (2/10)</td>
+              <td class="py-3 px-4">51.1%</td>
+              <td class="py-3 px-4 font-semibold text-emerald-700">+50.0%</td>
+              <td class="py-3 px-4">3.50&times; over baseline</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 font-semibold">Precision@20</td>
+              <td class="py-3 px-4 font-bold text-blue-600">60.0% (12/20)</td>
+              <td class="py-3 px-4">40.0% (8/20)</td>
+              <td class="py-3 px-4">51.1%</td>
+              <td class="py-3 px-4 font-semibold text-emerald-700">+20.0%</td>
+              <td class="py-3 px-4">1.50&times; over baseline</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 font-semibold">Precision@50</td>
+              <td class="py-3 px-4 font-bold text-blue-600">70.0% (35/50)</td>
+              <td class="py-3 px-4">40.0% (20/50)</td>
+              <td class="py-3 px-4">51.1%</td>
+              <td class="py-3 px-4 font-semibold text-emerald-700">+30.0%</td>
+              <td class="py-3 px-4">1.75&times; over baseline</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Figure 1: Embedded SVG Chart -->
+      <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+        <div class="text-sm font-bold text-slate-900 mb-1">Figure 1: Held-Out Top-K Precision Comparison (n = 6,163 across 7 Unseen Clients)</div>
+        <p class="text-xs text-slate-500 mb-4">Comparing Calibrated Logistic Regression against the Week-4 Striking-Distance Heuristic and the 51.1% Held-Out Base Rate.</p>
+        <svg viewBox="0 0 700 280" class="w-full h-auto">
+          <!-- Grid lines -->
+          <line x1="70" y1="30" x2="660" y2="30" stroke="#e2e8f0" stroke-width="1"/>
+          <line x1="70" y1="80" x2="660" y2="80" stroke="#e2e8f0" stroke-width="1"/>
+          <line x1="70" y1="130" x2="660" y2="130" stroke="#e2e8f0" stroke-width="1"/>
+          <line x1="70" y1="180" x2="660" y2="180" stroke="#e2e8f0" stroke-width="1"/>
+          <line x1="70" y1="230" x2="660" y2="230" stroke="#475569" stroke-width="1.5"/>
+          <!-- Y-axis labels (0% at y=230, 80% at y=30 -> 2.5px per 1%) -->
+          <text x="60" y="234" text-anchor="end" font-size="11" fill="#64748b">0%</text>
+          <text x="60" y="184" text-anchor="end" font-size="11" fill="#64748b">20%</text>
+          <text x="60" y="134" text-anchor="end" font-size="11" fill="#64748b">40%</text>
+          <text x="60" y="84" text-anchor="end" font-size="11" fill="#64748b">60%</text>
+          <text x="60" y="34" text-anchor="end" font-size="11" fill="#64748b">80%</text>
+
+          <!-- Base Rate Line (51.1% -> y = 230 - 51.1*2.5 = 102.25) -->
+          <line x1="70" y1="102" x2="660" y2="102" stroke="#e11d48" stroke-width="2" stroke-dasharray="6,4"/>
+          <text x="655" y="96" text-anchor="end" font-size="11" font-weight="600" fill="#e11d48">Held-Out Base Rate (51.1%)</text>
+
+          <!-- Precision@10: Model 70% (y=55, h=175), Baseline 20% (y=180, h=50) -->
+          <rect x="130" y="55" width="55" height="175" fill="#1d4ed8" rx="4"/>
+          <text x="157" y="48" text-anchor="middle" font-size="12" font-weight="700" fill="#1d4ed8">70.0%</text>
+          <rect x="195" y="180" width="55" height="50" fill="#d97706" rx="4"/>
+          <text x="222" y="173" text-anchor="middle" font-size="12" font-weight="700" fill="#d97706">20.0%</text>
+          <text x="190" y="255" text-anchor="middle" font-size="12" font-weight="700" fill="#1e293b">Precision@10</text>
+
+          <!-- Precision@20: Model 60% (y=80, h=150), Baseline 40% (y=130, h=100) -->
+          <rect x="320" y="80" width="55" height="150" fill="#1d4ed8" rx="4"/>
+          <text x="347" y="73" text-anchor="middle" font-size="12" font-weight="700" fill="#1d4ed8">60.0%</text>
+          <rect x="385" y="130" width="55" height="100" fill="#d97706" rx="4"/>
+          <text x="412" y="123" text-anchor="middle" font-size="12" font-weight="700" fill="#d97706">40.0%</text>
+          <text x="380" y="255" text-anchor="middle" font-size="12" font-weight="700" fill="#1e293b">Precision@20</text>
+
+          <!-- Precision@50: Model 70% (y=55, h=175), Baseline 40% (y=130, h=100) -->
+          <rect x="510" y="55" width="55" height="175" fill="#1d4ed8" rx="4"/>
+          <text x="537" y="48" text-anchor="middle" font-size="12" font-weight="700" fill="#1d4ed8">70.0%</text>
+          <rect x="575" y="130" width="55" height="100" fill="#d97706" rx="4"/>
+          <text x="602" y="123" text-anchor="middle" font-size="12" font-weight="700" fill="#d97706">40.0%</text>
+          <text x="570" y="255" text-anchor="middle" font-size="12" font-weight="700" fill="#1e293b">Precision@50</text>
+        </svg>
+        <div class="flex flex-wrap gap-6 justify-center text-xs font-semibold text-slate-600 mt-2">
+          <span class="flex items-center gap-2"><span class="w-3 h-3 rounded bg-blue-700 inline-block"></span> Calibrated Logistic Regression</span>
+          <span class="flex items-center gap-2"><span class="w-3 h-3 rounded bg-amber-600 inline-block"></span> Week-4 Striking-Distance Baseline</span>
+        </div>
+      </div>
+
+      <p class="text-sm text-slate-600 leading-relaxed">
+        <strong>Error Profile Analysis (Threshold = 0.50):</strong> Across all 6,163 held-out pages, the model recorded <strong>3,472 correct classifications (56.3%)</strong>, <strong>1,831 False Positives (29.7%)</strong>, and only <strong>860 False Negatives (14.0%)</strong>. Permutation importance on the Random Forest benchmark confirms that engagement consistency (<code>days_with_impressions</code>, <code>days_with_sessions</code>), content depth (<code>word_count</code>, <code>char_count</code>), and market demand (<code>search_volume</code>) are the top directional drivers of stability vs. decay.
+      </p>
+    </section>
+
+    <!-- Section 5 -->
+    <section id="sec-5" class="space-y-6">
+      <div class="text-xs font-bold uppercase tracking-widest text-blue-600">Section 05</div>
+      <h2 class="text-2xl font-bold text-slate-900">Limitations, NIST AI RMF Framing &amp; The Generalization Gap</h2>
+      <ul class="list-disc pl-6 space-y-2 text-slate-700 text-sm leading-relaxed">
+        <li><strong>Observational Association, Not Causal Proof:</strong> Our predictions reflect observed historical patterns. We do not claim that refreshing a page causally guarantees traffic recovery; causal attribution requires prospective A/B split testing.</li>
+        <li><strong>Zero Algorithm Reverse-Engineering:</strong> We model content performance decay for editorial workflow triage only and make no claims regarding Google's proprietary ranking weights.</li>
+        <li><strong>Same-Snapshot Horizon:</strong> Because <code>trend_direction</code> summarizes trajectory within the current release window, this framework operates as a cross-client decay detector rather than a multi-quarter forecasting oracle.</li>
+      </ul>
+
+      <!-- Figure 2: Validation Split Gap SVG -->
+      <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+        <div class="text-sm font-bold text-slate-900 mb-1">Figure 2: The Validation Generalization Gap &amp; Leakage Harness Audit (Average Precision)</div>
+        <p class="text-xs text-slate-500 mb-4">Demonstrating how mechanical 30-day window leakage (1.0000 AP) and naive random row splitting (0.7197 AP) artificially inflate performance compared to honest unseen-client evaluation (0.5758 AP).</p>
+        <svg viewBox="0 0 700 240" class="w-full h-auto">
+          <line x1="70" y1="30" x2="660" y2="30" stroke="#e2e8f0" stroke-width="1"/>
+          <line x1="70" y1="115" x2="660" y2="115" stroke="#e2e8f0" stroke-width="1"/>
+          <line x1="70" y1="200" x2="660" y2="200" stroke="#475569" stroke-width="1.5"/>
+          <text x="60" y="204" text-anchor="end" font-size="11" fill="#64748b">0.00</text>
+          <text x="60" y="119" text-anchor="end" font-size="11" fill="#64748b">0.50</text>
+          <text x="60" y="34" text-anchor="end" font-size="11" fill="#64748b">1.00</text>
+
+          <!-- Leaked Harness: 1.000 (y=30, h=170) -->
+          <rect x="125" y="30" width="90" height="170" fill="#b91c1c" rx="4"/>
+          <text x="170" y="23" text-anchor="middle" font-size="12" font-weight="700" fill="#b91c1c">1.0000 (Quarantined)</text>
+          <text x="170" y="222" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b">Deliberate 30d Formula Leak</text>
+
+          <!-- Random Split: 0.7197 (y=200 - 0.7197*170 = 77.6, h=122.4) -->
+          <rect x="325" y="78" width="90" height="122" fill="#7c3aed" rx="4"/>
+          <text x="370" y="70" text-anchor="middle" font-size="12" font-weight="700" fill="#7c3aed">0.7197 (+14.4% Inflated)</text>
+          <text x="370" y="222" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b">Naive Random Row Split</text>
+
+          <!-- Grouped Split: 0.5758 (y=200 - 0.5758*170 = 102.1, h=97.9) -->
+          <rect x="525" y="102" width="90" height="98" fill="#0f766e" rx="4"/>
+          <text x="570" y="94" text-anchor="middle" font-size="12" font-weight="700" fill="#0f766e">0.5758 (Honest Test)</text>
+          <text x="570" y="222" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b">Client-Grouped Split (7 Unseen)</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Section 6 -->
+    <section id="sec-6" class="space-y-6">
+      <div class="text-xs font-bold uppercase tracking-widest text-blue-600">Section 06</div>
+      <h2 class="text-2xl font-bold text-slate-900">Ranked Recommendations: The Content Action Playbook</h2>
+      <p class="text-slate-700 leading-relaxed">
+        We weight each page's calibrated decay probability by its 90-day search visibility (<code>Priority Score = impressions_90d &times; model_probability</code>) and segment the 30,000-URL inventory into <strong>19,330 Stable Performers (64.4%)</strong> and <strong>10,670 Actionable Candidates (35.6%)</strong> across four operational archetypes:
+      </p>
+
+      <div class="overflow-x-auto bg-white rounded-xl border border-slate-200 shadow-sm">
+        <table class="w-full text-left border-collapse text-sm">
+          <thead>
+            <tr class="bg-slate-100 text-slate-700 border-b border-slate-200">
+              <th class="py-3 px-4 font-semibold">Operational Archetype</th>
+              <th class="py-3 px-4 font-semibold">Quantitative Rule</th>
+              <th class="py-3 px-4 font-semibold">Portfolio Volume</th>
+              <th class="py-3 px-4 font-semibold">Prescribed Editorial Action &amp; Reason Code</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200 text-slate-700">
+            <tr>
+              <td class="py-3 px-4 font-bold text-blue-700">Decaying High-Demand Core</td>
+              <td class="py-3 px-4 mono text-xs">impressions_90d &ge; 5,000 &amp; prob &ge; 0.60</td>
+              <td class="py-3 px-4 font-semibold">3,027 URLs (10.1%)</td>
+              <td class="py-3 px-4"><code>comprehensive_content_refresh</code> (Update depth, intent &amp; freshness)</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 font-bold text-teal-700">Striking-Distance Opportunity</td>
+              <td class="py-3 px-4 mono text-xs">4 &le; pos &le; 20, imp &ge; 3k, ctr &le; 0.5%</td>
+              <td class="py-3 px-4 font-semibold">2,700 URLs (9.0%)</td>
+              <td class="py-3 px-4"><code>review_title_meta_and_intent</code> (Optimize H1/Title for SERP CTR)</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 font-bold text-rose-700">High-Visibility CTR Deficit</td>
+              <td class="py-3 px-4 mono text-xs">1 &le; pos &le; 3, imp &ge; 3k, ctr &le; 0.8%</td>
+              <td class="py-3 px-4 font-semibold">200 URLs (0.7%)</td>
+              <td class="py-3 px-4"><code>serp_snippet_optimization</code> (Audit structured schema &amp; snippets)</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 font-bold text-amber-700">Thin / Zombie Content</td>
+              <td class="py-3 px-4 mono text-xs">impressions_90d &lt; 100 &amp; age &gt; 180d</td>
+              <td class="py-3 px-4 font-semibold">4,743 URLs (15.8%)</td>
+              <td class="py-3 px-4"><code>evaluate_consolidation_or_pruning</code> (301 redirect or prune check)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Top 5 Queue Sample -->
+      <div class="bg-slate-900 text-slate-200 p-6 rounded-xl overflow-x-auto">
+        <div class="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">Top 5 Prioritized Queue Sample (from work/outputs/w07_action_queue.csv)</div>
+        <pre class="text-xs leading-relaxed text-slate-300">content_id            priority_score  archetype                      reason_code                prob    impressions_90d  avg_pos  ctr
+content_5fe46e04994d  360,112.49      Decaying High-Demand Core      high_demand_active_decay   0.6956  517,715          4.2      0.14%
+content_2dba2b1f9536  336,813.27      Decaying High-Demand Core      high_demand_active_decay   0.7596  443,434          27.9     0.21%
+content_2cb567c3c89b  314,080.47      Decaying High-Demand Core      high_demand_active_decay   0.6310  497,727          22.2     0.10%
+content_8e7ba84a972b  288,333.68      Decaying High-Demand Core      high_demand_active_decay   0.9997  288,426          4.8      0.92%
+content_aaef01a50def  195,178.64      Striking-Distance Opportunity  striking_distance_low_ctr  0.3774  517,109          5.4      0.25%</pre>
+      </div>
+
+      <div class="bg-blue-50 border border-blue-200 rounded-xl p-5 text-sm text-slate-700">
+        <strong class="text-slate-900 block mb-1">Non-Negotiable Human Safety Guardrails Enforced in Code:</strong>
+        1) <strong>Prune Safety Guard:</strong> Any Zombie URL with residual organic sessions or clicks (<code>sessions_90d &gt; 0</code> or <code>clicks_90d &gt; 0</code>) is programmatically blocked from deletion and restricted to 301 consolidation.
+        2) <strong>Senior Strategist Sign-Off:</strong> Mandatory human sign-off for pages with &ge;50,000 impressions or transactional intent.
+        3) <strong>60-Day Crawl Cooldown:</strong> Pages updated within the last 60 days are deferred to allow search engine re-indexing.
+      </div>
+    </section>
+
+    <!-- Section 7 -->
+    <section id="sec-7" class="space-y-4">
+      <div class="text-xs font-bold uppercase tracking-widest text-blue-600">Section 07</div>
+      <h2 class="text-2xl font-bold text-slate-900">Reproducibility &amp; Code Verification</h2>
+      <p class="text-slate-700 text-sm leading-relaxed">
+        All data audits, leakage harnesses, grouped splits, and playbook exports are deterministic (<code>RANDOM_SEED = 42</code>) and reproducible directly from the repository:
+      </p>
+      <div class="flex flex-wrap gap-4 pt-2">
+        <a href="https://github.com/MaazKhan53/ML-01-Run-the-Starter-Notebooks" target="_blank" class="px-4 py-2.5 rounded-lg bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 transition">
+          View GitHub Repository &rarr;
+        </a>
+        <a href="https://github.com/MaazKhan53/ML-01-Run-the-Starter-Notebooks/blob/main/work/notebooks/Solved_capstone.ipynb" target="_blank" class="px-4 py-2.5 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition">
+          Open Executed Capstone Notebook &rarr;
+        </a>
+        <a href="https://maazkhan--portfolio.vercel.app/" target="_blank" class="px-4 py-2.5 rounded-lg bg-white border border-slate-300 text-slate-800 text-sm font-semibold hover:bg-slate-100 transition">
+          Author Portfolio &rarr;
+        </a>
+      </div>
+    </section>
+
+    <!-- Section 8 -->
+    <section id="sec-8" class="border-t border-slate-200 pt-8 text-sm text-slate-600 flex flex-col md:flex-row justify-between gap-4">
+      <div>
+        <strong class="text-slate-900 block mb-1">08. Acknowledgments &amp; Data Credit</strong>
+        Built on the FlyRank ML Internship dataset — special credit and gratitude to the engineering and search intelligence teams at
+        <a href="https://flyrank.ai" target="_blank" class="text-blue-600 font-semibold hover:underline">FlyRank (https://flyrank.ai)</a> for providing production search warehouse access and mentorship.
+      </div>
+      <div class="text-slate-400 text-xs md:text-right shrink-0">
+        &copy; 2026 Maaz Khan.<br/>Deployed via GitHub Pages.
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>
