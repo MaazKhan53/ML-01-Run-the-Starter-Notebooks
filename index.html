@@ -11,9 +11,8 @@
     body { font-family: 'Inter', sans-serif; }
     code, pre, .mono { font-family: 'JetBrains Mono', monospace; }
   </style>
-</head>
-<body class="bg-slate-50 text-slate-800 antialiased selection:bg-blue-600 selection:text-white">
-<!-- Uninvasive Paper Analytics & Click Tracking -->
+
+  <!-- Uninvasive Paper Analytics & Click Tracking -->
   <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -34,12 +33,16 @@
           if (!window.clarity) return;
           if (href.indexOf("linkedin.com") !== -1) window.clarity("event", "paper_linkedin_click");
           else if (href.indexOf("capstone.ipynb") !== -1) window.clarity("event", "paper_notebook_click");
+          else if (href.indexOf("verify") !== -1) window.clarity("event", "paper_verify_badge_click");
           else if (href.indexOf("github.com") !== -1) window.clarity("event", "paper_repo_click");
           else if (href.indexOf("flyrank.ai") !== -1) window.clarity("event", "paper_flyrank_credit_click");
         });
       });
     });
   </script>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-blue-600 selection:text-white">
+
   <!-- Top Banner -->
   <header class="bg-slate-900 text-white border-b border-slate-800">
     <div class="max-w-5xl mx-auto px-6 py-12 md:py-16">
@@ -55,7 +58,7 @@
 
       <!-- Metadata Bar -->
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-6 border-t border-slate-800 text-sm">
-       <div>
+        <div>
           <span class="text-slate-400 block text-xs uppercase tracking-wider">Author</span>
           <a href="https://www.linkedin.com/in/maaz-khan-01290025b/" target="_blank" rel="noopener noreferrer" class="font-semibold text-white hover:text-blue-400 transition">Maaz Khan (@MaazKhan53)</a>
         </div>
@@ -69,7 +72,7 @@
         </div>
         <div>
           <span class="text-slate-400 block text-xs uppercase tracking-wider">Code &amp; Notebooks</span>
-          <a href="https://github.com/MaazKhan53/Maaz-Khan-FlyRank-AI-Internship/blob/main/work/notebooks/capstone.ipynb" target="_blank" class="font-semibold text-blue-400 hover:underline">Executed Capstone Notebook &rarr;</a>
+          <a href="https://github.com/MaazKhan53/Maaz-Khan-FlyRank-AI-Internship/blob/main/work/notebooks/capstone.ipynb" target="_blank" rel="noopener noreferrer" class="font-semibold text-blue-400 hover:underline">Executed Capstone Notebook &rarr;</a>
         </div>
       </div>
     </div>
@@ -274,24 +277,20 @@
         <div class="text-sm font-bold text-slate-900 mb-1">Figure 1: Held-Out Top-K Precision Comparison Across Models and Baseline (n = 6,163 Across 7 Unseen Clients)</div>
         <p class="text-xs text-slate-500 mb-4">Evaluating Calibrated Logistic Regression, Depth-Regularized Random Forest, and the Week 4 Striking-Distance Heuristic against the 51.1% Held-Out Base Rate.</p>
         <svg viewBox="0 0 740 290" class="w-full h-auto">
-          <!-- Grid lines -->
           <line x1="70" y1="30" x2="700" y2="30" stroke="#e2e8f0" stroke-width="1"/>
           <line x1="70" y1="80" x2="700" y2="80" stroke="#e2e8f0" stroke-width="1"/>
           <line x1="70" y1="130" x2="700" y2="130" stroke="#e2e8f0" stroke-width="1"/>
           <line x1="70" y1="180" x2="700" y2="180" stroke="#e2e8f0" stroke-width="1"/>
           <line x1="70" y1="230" x2="700" y2="230" stroke="#475569" stroke-width="1.5"/>
-          <!-- Y-axis labels -->
           <text x="60" y="234" text-anchor="end" font-size="11" fill="#64748b">0%</text>
           <text x="60" y="184" text-anchor="end" font-size="11" fill="#64748b">20%</text>
           <text x="60" y="134" text-anchor="end" font-size="11" fill="#64748b">40%</text>
           <text x="60" y="84" text-anchor="end" font-size="11" fill="#64748b">60%</text>
           <text x="60" y="34" text-anchor="end" font-size="11" fill="#64748b">80%</text>
 
-          <!-- Base Rate Line (51.1% -> y=102) -->
           <line x1="70" y1="102" x2="700" y2="102" stroke="#e11d48" stroke-width="2" stroke-dasharray="6,4"/>
           <text x="695" y="95" text-anchor="end" font-size="11" font-weight="600" fill="#e11d48">Held-Out Base Rate (51.1%)</text>
 
-          <!-- Group 1: Precision@10 (LR 70%, RF 60%, Base 20%) -->
           <rect x="115" y="55" width="42" height="175" fill="#1d4ed8" rx="3"/>
           <text x="136" y="48" text-anchor="middle" font-size="11" font-weight="700" fill="#1d4ed8">70%</text>
           <rect x="162" y="80" width="42" height="150" fill="#0f766e" rx="3"/>
@@ -300,7 +299,6 @@
           <text x="230" y="173" text-anchor="middle" font-size="11" font-weight="700" fill="#d97706">20%</text>
           <text x="183" y="255" text-anchor="middle" font-size="12" font-weight="700" fill="#1e293b">Precision@10</text>
 
-          <!-- Group 2: Precision@20 (LR 60%, RF 60%, Base 40%) -->
           <rect x="315" y="80" width="42" height="150" fill="#1d4ed8" rx="3"/>
           <text x="336" y="73" text-anchor="middle" font-size="11" font-weight="700" fill="#1d4ed8">60%</text>
           <rect x="362" y="80" width="42" height="150" fill="#0f766e" rx="3"/>
@@ -309,7 +307,6 @@
           <text x="430" y="123" text-anchor="middle" font-size="11" font-weight="700" fill="#d97706">40%</text>
           <text x="383" y="255" text-anchor="middle" font-size="12" font-weight="700" fill="#1e293b">Precision@20</text>
 
-          <!-- Group 3: Precision@50 (LR 70%, RF 62%, Base 40%) -->
           <rect x="515" y="55" width="42" height="175" fill="#1d4ed8" rx="3"/>
           <text x="536" y="48" text-anchor="middle" font-size="11" font-weight="700" fill="#1d4ed8">70%</text>
           <rect x="562" y="75" width="42" height="155" fill="#0f766e" rx="3"/>
@@ -325,16 +322,14 @@
         </div>
       </div>
 
-      <!-- FIGURE 2: Top 8 Directional Feature Drivers (Permutation Importance) -->
+      <!-- FIGURE 2: Top 8 Directional Feature Drivers -->
       <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
         <div class="text-sm font-bold text-slate-900 mb-1">Figure 2: Top 8 Directional Feature Drivers on Unseen Clients (Permutation Importance)</div>
         <p class="text-xs text-slate-500 mb-4">Mean decrease in held-out Average Precision (PR-AUC) across 5 permutation repeats when shuffling each clean feature on the 7 unseen test clients.</p>
         <svg viewBox="0 0 740 275" class="w-full h-auto">
-          <!-- Axis -->
           <line x1="210" y1="20" x2="210" y2="245" stroke="#475569" stroke-width="1.5"/>
           <line x1="210" y1="245" x2="680" y2="245" stroke="#e2e8f0" stroke-width="1"/>
 
-          <!-- Bars -->
           <text x="200" y="42" text-anchor="end" font-size="11" font-weight="600" fill="#1e293b" class="mono">days_with_impressions</text>
           <rect x="210" y="29" width="390" height="18" fill="#0f766e" rx="3"/>
           <text x="608" y="42" font-size="11" font-weight="700" fill="#0f766e">+0.0184 AP</text>
@@ -399,21 +394,17 @@
           <text x="60" y="119" text-anchor="end" font-size="11" fill="#64748b">0.50</text>
           <text x="60" y="34" text-anchor="end" font-size="11" fill="#64748b">1.00</text>
 
-          <!-- Base Rate Line (0.511 -> y = 113) -->
           <line x1="70" y1="113" x2="690" y2="113" stroke="#64748b" stroke-width="1.5" stroke-dasharray="5,4"/>
           <text x="685" y="107" text-anchor="end" font-size="10" font-weight="600" fill="#475569">Held-Out Base Rate (0.5110)</text>
 
-          <!-- Leaked Harness: 1.000 (y=30, h=170) -->
           <rect x="130" y="30" width="95" height="170" fill="#b91c1c" rx="4"/>
           <text x="177" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="#b91c1c">1.0000 (Quarantined)</text>
           <text x="177" y="222" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b">Deliberate 30d Formula Leak</text>
 
-          <!-- Random Split: 0.7197 (y=78, h=122) -->
           <rect x="335" y="78" width="95" height="122" fill="#7c3aed" rx="4"/>
           <text x="382" y="70" text-anchor="middle" font-size="12" font-weight="700" fill="#7c3aed">0.7197 (+14.4% Inflated)</text>
           <text x="382" y="222" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b">Naive Random Row Split</text>
 
-          <!-- Grouped Split: 0.5758 (y=102, h=98) -->
           <rect x="540" y="102" width="95" height="98" fill="#0f766e" rx="4"/>
           <text x="587" y="94" text-anchor="middle" font-size="12" font-weight="700" fill="#0f766e">0.5758 (Honest Test)</text>
           <text x="587" y="222" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b">Client-Grouped Split (7 Unseen)</text>
@@ -476,27 +467,22 @@
           <line x1="220" y1="20" x2="220" y2="205" stroke="#475569" stroke-width="1.5"/>
           <line x1="220" y1="205" x2="700" y2="205" stroke="#e2e8f0" stroke-width="1"/>
 
-          <!-- Stable Performer: 19,330 (64.4%) -> width 386 -->
           <text x="210" y="44" text-anchor="end" font-size="11" font-weight="600" fill="#1e293b">Stable Performer</text>
           <rect x="220" y="29" width="386" height="22" fill="#334155" rx="3"/>
           <text x="614" y="44" font-size="11" font-weight="700" fill="#334155">19,330 (64.4%)</text>
 
-          <!-- Thin / Zombie Content: 4,743 (15.8%) -> width 95 -->
           <text x="210" y="80" text-anchor="end" font-size="11" font-weight="600" fill="#1e293b">Thin / Zombie Content</text>
           <rect x="220" y="65" width="95" height="22" fill="#d97706" rx="3"/>
           <text x="323" y="80" font-size="11" font-weight="700" fill="#d97706">4,743 (15.8%)</text>
 
-          <!-- Decaying High-Demand Core: 3,027 (10.1%) -> width 61 -->
           <text x="210" y="116" text-anchor="end" font-size="11" font-weight="600" fill="#1e293b">Decaying High-Demand Core</text>
           <rect x="220" y="101" width="61" height="22" fill="#1d4ed8" rx="3"/>
           <text x="289" y="116" font-size="11" font-weight="700" fill="#1d4ed8">3,027 (10.1%)</text>
 
-          <!-- Striking-Distance Opportunity: 2,700 (9.0%) -> width 54 -->
           <text x="210" y="152" text-anchor="end" font-size="11" font-weight="600" fill="#1e293b">Striking-Distance Opportunity</text>
           <rect x="220" y="137" width="54" height="22" fill="#0f766e" rx="3"/>
           <text x="282" y="152" font-size="11" font-weight="700" fill="#0f766e">2,700 (9.0%)</text>
 
-          <!-- High Visibility CTR Deficit: 200 (0.7%) -> width 6 -->
           <text x="210" y="188" text-anchor="end" font-size="11" font-weight="600" fill="#1e293b">High-Visibility CTR Deficit</text>
           <rect x="220" y="173" width="6" height="22" fill="#be123c" rx="2"/>
           <text x="234" y="188" font-size="11" font-weight="700" fill="#be123c">200 (0.7%)</text>
@@ -508,7 +494,6 @@
         <div class="text-sm font-bold text-slate-900 mb-1">Figure 5: Top-20 Content Action Triage Queue (Prioritized by Expected Impact Score)</div>
         <p class="text-xs text-slate-500 mb-4">Top 20 highest-priority URLs ranked by <code>impressions_90d &times; model_probability</code> (in thousands). Color-coded by assigned archetype.</p>
         <svg viewBox="0 0 740 285" class="w-full h-auto">
-          <!-- Grid -->
           <line x1="65" y1="25" x2="715" y2="25" stroke="#e2e8f0" stroke-width="1"/>
           <line x1="65" y1="70" x2="715" y2="70" stroke="#e2e8f0" stroke-width="1"/>
           <line x1="65" y1="115" x2="715" y2="115" stroke="#e2e8f0" stroke-width="1"/>
@@ -521,49 +506,27 @@
           <text x="55" y="74" text-anchor="end" font-size="10" fill="#64748b">300k</text>
           <text x="55" y="29" text-anchor="end" font-size="10" fill="#64748b">400k</text>
 
-          <!-- 20 Bars (scale: 0.45px per 1k score, base y=205) -->
-          <!-- 1: 360.1k (h=162, y=43) -->
           <rect x="75" y="43" width="22" height="162" fill="#1d4ed8" rx="2"/>
-          <!-- 2: 336.8k (h=152, y=53) -->
           <rect x="107" y="53" width="22" height="152" fill="#1d4ed8" rx="2"/>
-          <!-- 3: 314.1k (h=141, y=64) -->
           <rect x="139" y="64" width="22" height="141" fill="#1d4ed8" rx="2"/>
-          <!-- 4: 288.3k (h=130, y=75) -->
           <rect x="171" y="75" width="22" height="130" fill="#1d4ed8" rx="2"/>
-          <!-- 5: 195.2k Striking Distance (h=88, y=117) -->
           <rect x="203" y="117" width="22" height="88" fill="#0f766e" rx="2"/>
-          <!-- 6: 194.3k (h=87, y=118) -->
           <rect x="235" y="118" width="22" height="87" fill="#1d4ed8" rx="2"/>
-          <!-- 7: 192.8k (h=87, y=118) -->
           <rect x="267" y="118" width="22" height="87" fill="#1d4ed8" rx="2"/>
-          <!-- 8: 191.7k (h=86, y=119) -->
           <rect x="299" y="119" width="22" height="86" fill="#1d4ed8" rx="2"/>
-          <!-- 9: 186.4k (h=84, y=121) -->
           <rect x="331" y="121" width="22" height="84" fill="#1d4ed8" rx="2"/>
-          <!-- 10: 183.2k (h=82, y=123) -->
           <rect x="363" y="123" width="22" height="82" fill="#1d4ed8" rx="2"/>
-          <!-- 11: 176.5k (h=79, y=126) -->
           <rect x="395" y="126" width="22" height="79" fill="#1d4ed8" rx="2"/>
-          <!-- 12: 171.0k (h=77, y=128) -->
           <rect x="427" y="128" width="22" height="77" fill="#1d4ed8" rx="2"/>
-          <!-- 13: 165.4k (h=74, y=131) -->
           <rect x="459" y="131" width="22" height="74" fill="#1d4ed8" rx="2"/>
-          <!-- 14: 160.8k Striking Distance (h=72, y=133) -->
           <rect x="491" y="133" width="22" height="72" fill="#0f766e" rx="2"/>
-          <!-- 15: 156.2k (h=70, y=135) -->
           <rect x="523" y="135" width="22" height="70" fill="#1d4ed8" rx="2"/>
-          <!-- 16: 151.9k (h=68, y=137) -->
           <rect x="555" y="137" width="22" height="68" fill="#1d4ed8" rx="2"/>
-          <!-- 17: 148.0k (h=67, y=138) -->
           <rect x="587" y="138" width="22" height="67" fill="#1d4ed8" rx="2"/>
-          <!-- 18: 144.3k (h=65, y=140) -->
           <rect x="619" y="140" width="22" height="65" fill="#1d4ed8" rx="2"/>
-          <!-- 19: 140.1k (h=63, y=142) -->
           <rect x="651" y="142" width="22" height="63" fill="#1d4ed8" rx="2"/>
-          <!-- 20: 136.8k (h=62, y=143) -->
           <rect x="683" y="143" width="22" height="62" fill="#1d4ed8" rx="2"/>
 
-          <!-- Rank Labels -->
           <text x="86" y="222" text-anchor="middle" font-size="9" font-weight="600" fill="#334155">#1</text>
           <text x="118" y="222" text-anchor="middle" font-size="9" font-weight="600" fill="#334155">#2</text>
           <text x="150" y="222" text-anchor="middle" font-size="9" font-weight="600" fill="#334155">#3</text>
@@ -596,17 +559,17 @@
       <!-- Top 10 Queue Sample -->
       <div class="bg-slate-900 text-slate-200 p-6 rounded-xl overflow-x-auto">
         <div class="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">Top 10 Prioritized Queue Sample (from work/outputs/w07_action_queue.csv)</div>
-        <pre class="text-xs leading-relaxed text-slate-300">content_id            priority_score  archetype                      reason_code                prob    impressions_90d  avg_pos  ctr
-content_5fe46e04994d  360,112.49      Decaying High-Demand Core      high_demand_active_decay   0.6956  517,715          4.2      0.14%
-content_2dba2b1f9536  336,813.27      Decaying High-Demand Core      high_demand_active_decay   0.7596  443,434          27.9     0.21%
-content_2cb567c3c89b  314,080.47      Decaying High-Demand Core      high_demand_active_decay   0.6310  497,727          22.2     0.10%
-content_8e7ba84a972b  288,333.68      Decaying High-Demand Core      high_demand_active_decay   0.9997  288,426          4.8      0.92%
-content_aaef01a50def  195,178.64      Striking-Distance Opportunity  striking_distance_low_ctr  0.3774  517,109          5.4      0.25%
-content_36ff89c8214e  194,340.37      Decaying High-Demand Core      high_demand_active_decay   0.6586  295,097          7.3      0.05%
-content_cb112fce36be  192,785.24      Decaying High-Demand Core      high_demand_active_decay   0.6221  309,910          5.6      0.16%
-content_c84a0ab98e90  191,703.49      Decaying High-Demand Core      high_demand_active_decay   0.8586  223,271          7.8      0.03%
-content_66b4046cc144  186,443.99      Decaying High-Demand Core      high_demand_active_decay   0.8575  217,415          26.6     0.03%
-content_b28d1efd668f  183,191.17      Decaying High-Demand Core      high_demand_active_decay   0.6392  286,608          26.2     0.06%</pre>
+        <pre class="text-xs leading-relaxed text-slate-300">content_id             priority_score  archetype                      reason_code                prob    impressions_90d  avg_pos  ctr
+content_5fe46e04994d   360,112.49      Decaying High-Demand Core      high_demand_active_decay   0.6956  517,715          4.2      0.14%
+content_2dba2b1f9536   336,813.27      Decaying High-Demand Core      high_demand_active_decay   0.7596  443,434          27.9     0.21%
+content_2cb567c3c89b   314,080.47      Decaying High-Demand Core      high_demand_active_decay   0.6310  497,727          22.2     0.10%
+content_8e7ba84a972b   288,333.68      Decaying High-Demand Core      high_demand_active_decay   0.9997  288,426          4.8      0.92%
+content_aaef01a50def   195,178.64      Striking-Distance Opportunity  striking_distance_low_ctr  0.3774  517,109          5.4      0.25%
+content_36ff89c8214e   194,340.37      Decaying High-Demand Core      high_demand_active_decay   0.6586  295,097          7.3      0.05%
+content_cb112fce36be   192,785.24      Decaying High-Demand Core      high_demand_active_decay   0.6221  309,910          5.6      0.16%
+content_c84a0ab98e90   191,703.49      Decaying High-Demand Core      high_demand_active_decay   0.8586  223,271          7.8      0.03%
+content_66b4046cc144   186,443.99      Decaying High-Demand Core      high_demand_active_decay   0.8575  217,415          26.6     0.03%
+content_b28d1efd668f   183,191.17      Decaying High-Demand Core      high_demand_active_decay   0.6392  286,608          26.2     0.06%</pre>
       </div>
 
       <div class="bg-blue-50 border border-blue-200 rounded-xl p-5 text-sm text-slate-700">
@@ -624,25 +587,48 @@ content_b28d1efd668f  183,191.17      Decaying High-Demand Core      high_demand
       <p class="text-slate-700 text-sm leading-relaxed">
         All data audits, leakage harnesses, grouped splits, and playbook exports are deterministic (<code>RANDOM_SEED = 42</code>) and reproducible directly from the repository:
       </p>
- <div class="flex flex-wrap gap-4 pt-2">
+      <div class="flex flex-wrap gap-4 pt-2">
         <a href="https://github.com/MaazKhan53/Maaz-Khan-FlyRank-AI-Internship" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-lg bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 transition">
           View GitHub Repository &rarr;
         </a>
         <a href="https://github.com/MaazKhan53/Maaz-Khan-FlyRank-AI-Internship/blob/main/work/notebooks/capstone.ipynb" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition">
           Open Executed Capstone Notebook &rarr;
         </a>
+        <a href="https://internship.flyrank.ai/verify/FR-D10-856B9-368E2?first_name=Maaz" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-lg bg-emerald-950 border border-emerald-500/40 text-emerald-300 text-sm font-semibold hover:bg-emerald-900 transition">
+          Verify FlyRank Credential &rarr;
+        </a>
       </div>
     </section>
 
     <!-- Section 8 -->
-    <section id="sec-8" class="border-t border-slate-200 pt-8 text-sm text-slate-600 flex flex-col md:flex-row justify-between gap-4">
-      <div>
-        <strong class="text-slate-900 block mb-1">08. Acknowledgments &amp; Data Credit</strong>
-        Built on the FlyRank ML Internship dataset. Special credit and gratitude to the engineering and search intelligence teams at
-        <a href="https://flyrank.ai" target="_blank" class="text-blue-600 font-semibold hover:underline">FlyRank (https://flyrank.ai)</a> for providing production search warehouse access and mentorship.
+    <section id="sec-8" class="border-t border-slate-200 pt-10 text-sm text-slate-600 space-y-8">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+        <div class="max-w-xl">
+          <strong class="text-slate-900 block mb-1">08. Acknowledgments &amp; Data Credit</strong>
+          Built on the FlyRank ML Internship dataset. Special credit and gratitude to the engineering and search intelligence teams at
+          <a href="https://flyrank.ai" target="_blank" rel="noopener noreferrer" class="text-blue-600 font-semibold hover:underline">FlyRank (https://flyrank.ai)</a> for providing production search warehouse access and mentorship.
+        </div>
+
+        <!-- Official FlyRank Verification Badge -->
+        <a href="https://internship.flyrank.ai/verify/FR-D10-856B9-368E2?first_name=Maaz" target="_blank" rel="noopener noreferrer"
+           aria-label="Verify Maaz Khan's FlyRank AI Internship credential"
+           class="transition duration-300 transform hover:-translate-y-0.5 shrink-0"
+           style="display:inline-flex;align-items:center;gap:14px;padding:12px 18px;background:#051F21;border:1px solid rgba(84,227,153,0.3);border-radius:16px;box-shadow:0 10px 25px -5px rgba(0,0,0,0.25);text-decoration:none;">
+          <svg width="36" height="36" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:block;flex:none;">
+            <rect width="96" height="96" rx="20" fill="#54E399" />
+            <path d="M28.2354 74.2202V67.9039C29.6419 68.4369 31.3724 68.7055 33.4311 68.7055C35.3235 68.7055 36.8153 68.2396 37.8979 67.3079C38.9805 66.3762 39.9566 64.8695 40.8218 62.792L42.6887 58.3139L29.8976 29.2879C35.0038 29.2879 39.6028 32.3307 41.5294 36.9893L47.0746 50.3985L56.0126 28.6038C57.9221 23.9452 62.5168 20.894 67.6187 20.894L50.0795 63.5936C48.4556 67.5933 46.5205 70.5102 44.2743 72.3484C42.0281 74.1867 39.1169 75.1058 35.5451 75.1058C32.6212 75.1058 30.1875 74.812 28.2354 74.2244V74.2202Z" fill="#051F21" />
+          </svg>
+          <span style="display:flex;flex-direction:column;gap:2px;text-align:left;">
+            <span style="font-family:ui-monospace,monospace;font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.6);">FlyRank AI Internship</span>
+            <span style="font-size:14px;font-weight:600;color:#FFFFFF;white-space:nowrap;">Verified Credential</span>
+            <span style="font-size:11px;color:#54E399;white-space:nowrap;">ID: FR-D10-856B9-368E2</span>
+          </span>
+        </a>
       </div>
-      <div class="text-slate-400 text-xs md:text-right shrink-0">
-        &copy; 2026 Maaz Khan.<br/>Deployed via GitHub Pages.
+
+      <div class="text-slate-400 text-xs border-t border-slate-200/70 pt-4 flex justify-between">
+        <span>&copy; 2026 Maaz Khan.</span>
+        <span>Deployed via GitHub Pages.</span>
       </div>
     </section>
 
