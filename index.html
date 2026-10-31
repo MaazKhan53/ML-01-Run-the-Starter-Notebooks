@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Predictive Content Triage & Decay Scoring at Scale | Maaz Khan</title>
-  <meta name="description" content="Evaluating regularized machine learning classification and leakage harnesses against heuristic striking-distance baselines on 30,000 production URLs across 32 enterprise domains." />
+  <meta name="description" content="Evaluating regularized machine learning classification and leakage harnesses against heuristic striking-distance baselines on 30,000 production URLs sampled from a 79M-row warehouse across 32 enterprise domains." />
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
@@ -20,11 +20,54 @@
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "z3rbxtmulr");
 
+    function applyPaperClarityConsent(granted) {
+      try {
+        if (typeof window.clarity === "function") {
+          window.clarity("consent", granted);
+          window.clarity("consentv2", {
+            ad_Storage: "denied",
+            analytics_Storage: granted ? "granted" : "denied"
+          });
+        }
+      } catch (e) {}
+    }
+
     document.addEventListener("DOMContentLoaded", function () {
       try {
         var params = new URLSearchParams(window.location.search);
         var ref = params.get("ref") || params.get("from");
         if (ref && window.clarity) window.clarity("set", "paper_ref", ref);
+      } catch (e) {}
+
+      // EU/UK/Swiss Clarity Consent Banner Logic
+      try {
+        var banner = document.getElementById("paperConsentBanner");
+        var acceptBtn = document.getElementById("acceptPaperClarity");
+        var declineBtn = document.getElementById("declinePaperClarity");
+        var saved = localStorage.getItem("clarity_consent_v1");
+
+        if (!saved && banner) {
+          banner.classList.remove("hidden");
+        } else if (saved === "granted") {
+          applyPaperClarityConsent(true);
+        } else if (saved === "denied") {
+          applyPaperClarityConsent(false);
+        }
+
+        if (acceptBtn) {
+          acceptBtn.addEventListener("click", function () {
+            try { localStorage.setItem("clarity_consent_v1", "granted"); } catch (e) {}
+            applyPaperClarityConsent(true);
+            if (banner) banner.classList.add("hidden");
+          });
+        }
+        if (declineBtn) {
+          declineBtn.addEventListener("click", function () {
+            try { localStorage.setItem("clarity_consent_v1", "denied"); } catch (e) {}
+            applyPaperClarityConsent(false);
+            if (banner) banner.classList.add("hidden");
+          });
+        }
       } catch (e) {}
 
       document.querySelectorAll("a[href]").forEach(function (a) {
@@ -53,7 +96,7 @@
         Predictive Content Triage &amp; Decay Scoring Under Bandwidth Constraints
       </h1>
       <p class="text-lg md:text-xl text-slate-300 max-w-3xl leading-relaxed mb-8">
-        Evaluating calibrated classification, non-linear tree ensembles, and mechanical leakage harnesses against heuristic striking-distance baselines on 30,000 production URLs across 32 enterprise domains.
+        Evaluating calibrated classification, non-linear tree ensembles, and mechanical leakage harnesses against heuristic striking-distance baselines on 30,000 production URLs sampled from a 79M-row warehouse across 32 enterprise domains.
       </p>
 
       <!-- Metadata Bar -->
@@ -68,7 +111,7 @@
         </div>
         <div>
           <span class="text-slate-400 block text-xs uppercase tracking-wider">Data Provenance</span>
-          <span class="font-semibold text-slate-200">FlyRank 30k Sample (79M Warehouse)</span>
+          <span class="font-semibold text-slate-200">30k URLs Sampled from 79M Warehouse</span>
         </div>
         <div>
           <span class="text-slate-400 block text-xs uppercase tracking-wider">Code &amp; Notebooks</span>
@@ -84,7 +127,7 @@
     <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
       <h2 class="text-xs font-bold uppercase tracking-widest text-blue-600 mb-3">Abstract (5-Sentence Summary)</h2>
       <p class="text-slate-700 leading-relaxed text-base md:text-lg mb-8">
-        Editorial and SEO teams managing tens of thousands of URLs face severe bandwidth constraints when identifying which decaying pages warrant immediate manual intervention. Using the official anonymized production sample from the FlyRank search intelligence warehouse comprising <strong>30,000 content items across 32 enterprise clients</strong>, we examined 90-day search visibility metrics, on-page structure, and keyword intent while enforcing a programmatic leakage harness to purge 13 label-derived and 30-day formula-leaking columns. We formulated content refresh prioritization as a decision-support triage task, evaluating an L2-regularized Logistic Regression scorer and a depth-constrained Random Forest benchmark under a strict client-grouped holdout split (<strong>25 training clients, 7 unseen test clients with zero domain overlap</strong>). Evaluated under a locked comparison contract on the 6,163 held-out test pages, our primary model achieved a <strong>Precision@10 of 70.0%</strong> and <strong>Precision@50 of 70.0%</strong>, outperforming the Week 4 heuristic striking-distance baseline by <strong>+50.0 and +30.0 percentage points</strong> respectively (a 3.5&times; lift at K=10 against a 51.1% test base rate). Finally, we weight calibrated decay probabilities by 90-day impression demand to route <strong>10,670 actionable URLs</strong> into a four-archetype Action Playbook governed by automated human-in-the-loop safety guardrails.
+        Editorial and SEO teams managing tens of thousands of URLs face severe bandwidth constraints when identifying which decaying pages warrant immediate manual intervention. Using the official anonymized production sample from the 79M-row FlyRank search intelligence warehouse comprising <strong>30,000 content items across 32 enterprise clients</strong>, we examined 90-day search visibility metrics, on-page structure, and keyword intent while enforcing a programmatic leakage harness to purge 13 label-derived and 30-day formula-leaking columns. We formulated content refresh prioritization as a decision-support triage task, evaluating an L2-regularized Logistic Regression scorer and a depth-constrained Random Forest benchmark under a strict client-grouped holdout split (<strong>25 training clients, 7 unseen test clients with zero domain overlap</strong>). Evaluated under a locked comparison contract on the 6,163 held-out test pages, our primary model achieved a <strong>Precision@10 of 70.0%</strong> (a 3.50&times; lift / +50.0 percentage points over the 20.0% Week 4 heuristic baseline) and a <strong>Precision@50 of 70.0%</strong> (a 1.75&times; lift / +30.0 percentage points over the 40.0% baseline against a 51.1% test base rate). Finally, we weight calibrated decay probabilities by 90-day impression demand to route <strong>10,670 actionable URLs</strong> into a four-archetype Action Playbook governed by automated human-in-the-loop safety guardrails.
       </p>
 
       <!-- KPI Cards -->
@@ -92,7 +135,7 @@
         <div class="bg-slate-50 rounded-xl p-5 border border-slate-200">
           <div class="text-3xl font-extrabold text-blue-600">70.0%</div>
           <div class="text-sm font-semibold text-slate-900 mt-1">Precision@10 &amp; @50 (Model)</div>
-          <div class="text-xs text-emerald-700 font-medium mt-1">+50.0% lift at K=10 vs. Baseline (20.0%)</div>
+          <div class="text-xs text-emerald-700 font-medium mt-1">+50.0 pp (3.5&times; lift) at K=10; +30.0 pp (1.75&times;) at K=50</div>
         </div>
         <div class="bg-slate-50 rounded-xl p-5 border border-slate-200">
           <div class="text-3xl font-extrabold text-teal-600">6,163</div>
@@ -100,9 +143,9 @@
           <div class="text-xs text-slate-500 mt-1">7 unseen client domains (0 overlap)</div>
         </div>
         <div class="bg-slate-50 rounded-xl p-5 border border-slate-200">
-          <div class="text-3xl font-extrabold text-purple-600">+14.4%</div>
+          <div class="text-3xl font-extrabold text-purple-600">+14.4 pp</div>
           <div class="text-sm font-semibold text-slate-900 mt-1">Generalization Gap Exposed</div>
-          <div class="text-xs text-slate-500 mt-1">Random split (0.7197) vs Grouped (0.5758)</div>
+          <div class="text-xs text-slate-500 mt-1">Random split (0.7197 AP) vs Grouped (0.5758 AP)</div>
         </div>
         <div class="bg-slate-50 rounded-xl p-5 border border-slate-200">
           <div class="text-3xl font-extrabold text-amber-600">10,670</div>
@@ -250,7 +293,7 @@
               <td class="py-3 px-4 font-semibold text-teal-700">60.0% (6/10)</td>
               <td class="py-3 px-4">20.0% (2/10)</td>
               <td class="py-3 px-4">51.1%</td>
-              <td class="py-3 px-4 font-semibold text-emerald-700">+50.0% (3.50&times;)</td>
+              <td class="py-3 px-4 font-semibold text-emerald-700">+50.0 pp (3.50&times; lift)</td>
             </tr>
             <tr>
               <td class="py-3 px-4 font-semibold">Precision@20</td>
@@ -258,7 +301,7 @@
               <td class="py-3 px-4 font-semibold text-teal-700">60.0% (12/20)</td>
               <td class="py-3 px-4">40.0% (8/20)</td>
               <td class="py-3 px-4">51.1%</td>
-              <td class="py-3 px-4 font-semibold text-emerald-700">+20.0% (1.50&times;)</td>
+              <td class="py-3 px-4 font-semibold text-emerald-700">+20.0 pp (1.50&times; lift)</td>
             </tr>
             <tr>
               <td class="py-3 px-4 font-semibold">Precision@50</td>
@@ -266,7 +309,7 @@
               <td class="py-3 px-4 font-semibold text-teal-700">62.0% (31/50)</td>
               <td class="py-3 px-4">40.0% (20/50)</td>
               <td class="py-3 px-4">51.1%</td>
-              <td class="py-3 px-4 font-semibold text-emerald-700">+30.0% (1.75&times;)</td>
+              <td class="py-3 px-4 font-semibold text-emerald-700">+30.0 pp (1.75&times; lift)</td>
             </tr>
           </tbody>
         </table>
@@ -385,7 +428,7 @@
       <!-- FIGURE 3: Validation Split Gap & Leakage Harness SVG -->
       <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
         <div class="text-sm font-bold text-slate-900 mb-1">Figure 3: Leakage Harness &amp; Validation Generalization Audit (Average Precision)</div>
-        <p class="text-xs text-slate-500 mb-4">Quantifying how mechanical 30-day window leakage (1.0000 AP) and naive random row splitting (0.7197 AP) artificially inflate performance compared to honest unseen-client evaluation (0.5758 AP).</p>
+        <p class="text-xs text-slate-500 mb-4">Quantifying how mechanical 30-day window leakage (1.0000 AP) and naive random row splitting (0.7197 AP, +14.4 percentage points inflated) artificially inflate performance compared to honest unseen-client evaluation (0.5758 AP).</p>
         <svg viewBox="0 0 740 245" class="w-full h-auto">
           <line x1="70" y1="30" x2="690" y2="30" stroke="#e2e8f0" stroke-width="1"/>
           <line x1="70" y1="115" x2="690" y2="115" stroke="#e2e8f0" stroke-width="1"/>
@@ -402,7 +445,7 @@
           <text x="177" y="222" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b">Deliberate 30d Formula Leak</text>
 
           <rect x="335" y="78" width="95" height="122" fill="#7c3aed" rx="4"/>
-          <text x="382" y="70" text-anchor="middle" font-size="12" font-weight="700" fill="#7c3aed">0.7197 (+14.4% Inflated)</text>
+          <text x="382" y="70" text-anchor="middle" font-size="12" font-weight="700" fill="#7c3aed">0.7197 (+14.4 pp Inflated)</text>
           <text x="382" y="222" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b">Naive Random Row Split</text>
 
           <rect x="540" y="102" width="95" height="98" fill="#0f766e" rx="4"/>
@@ -633,5 +676,18 @@ content_b28d1efd668f   183,191.17      Decaying High-Demand Core      high_deman
     </section>
 
   </main>
+
+  <!-- Microsoft Clarity Consent Banner (EU/UK/Swiss Compliance) -->
+  <div id="paperConsentBanner" class="fixed bottom-5 left-5 z-50 max-w-xs p-4 rounded-2xl bg-slate-900 text-white border border-slate-700 shadow-xl hidden">
+    <div class="text-xs font-bold uppercase tracking-wider text-blue-400 mb-1">Analytics Consent</div>
+    <p class="text-xs text-slate-300 leading-relaxed mb-3">
+      This research paper uses Microsoft Clarity to measure readership engagement. Do you consent to analytics cookies?
+    </p>
+    <div class="flex gap-2">
+      <button id="acceptPaperClarity" type="button" class="px-3.5 py-1.5 rounded-lg bg-blue-600 text-white text-xs font-semibold hover:bg-blue-500 transition">Accept</button>
+      <button id="declinePaperClarity" type="button" class="px-3.5 py-1.5 rounded-lg bg-slate-800 text-slate-300 text-xs font-medium hover:bg-slate-700 transition">Decline</button>
+    </div>
+  </div>
+
 </body>
 </html>
